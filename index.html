@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>才數報價工具</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#dcdcdc;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:420px;
+    background:#f2f2f2;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    box-sizing:border-box;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-size:15px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    box-sizing:border-box;
+}
+
+.result{
+    text-align:center;
+    margin-top:25px;
+    font-size:20px;
+}
+
+.price{
+    color:#e65100;
+    font-size:28px;
+    margin-top:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.btn-generate{
+    background:#3b82b6;
+    color:white;
+}
+
+.btn-copy{
+    background:#2ea65c;
+    color:white;
+}
+
+.btn-clear{
+    background:#999;
+    color:white;
+}
+
+.preview{
+    margin-top:20px;
+    background:#e8e8e8;
+    padding:15px;
+    border-radius:10px;
+    white-space:pre-line;
+    font-size:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>才數報價工具</h1>
+
+<label>寬度 (cm)</label>
+<input id="width" type="number" oninput="calculate()">
+
+<label>高度 (cm)</label>
+<input id="height" type="number" oninput="calculate()">
+
+<label>單價 (元 / 才)</label>
+<input id="price" type="number" oninput="calculate()">
+
+<div class="result">
+<div id="talent">才數：0 才</div>
+<div class="price" id="total">NT$ 0</div>
+</div>
+
+<button class="btn-generate" onclick="generateText()">產生報價訊息</button>
+<button class="btn-copy" onclick="copyText()">複製訊息</button>
+<button class="btn-clear" onclick="clearAll()">清空</button>
+
+<div class="preview" id="preview"></div>
+
+</div>
+
+<script>
+
+let resultText="";
+
+function calculate(){
+
+let w = parseFloat(document.getElementById("width").value);
+let h = parseFloat(document.getElementById("height").value);
+let p = parseFloat(document.getElementById("price").value);
+
+if(!w || !h){
+document.getElementById("talent").innerText="才數：0 才";
+document.getElementById("total").innerText="NT$ 0";
+return;
+}
+
+let talent = (w*h)/900;
+
+talent = Math.round(talent);
+
+document.getElementById("talent").innerText="才數："+talent+" 才";
+
+if(p){
+let total = talent * p;
+document.getElementById("total").innerText="NT$ "+total;
+}
+
+}
+
+function generateText(){
+
+let w = document.getElementById("width").value;
+let h = document.getElementById("height").value;
+let p = document.getElementById("price").value;
+
+let talent = (w*h)/900;
+talent = Math.round(talent);
+
+let total = talent*p;
+
+resultText =
+"尺寸："+w+" × "+h+" cm\n"+
+"才數："+talent+" 才\n"+
+"總價：NT$ "+total;
+
+document.getElementById("preview").innerText=resultText;
+
+}
+
+function copyText(){
+
+if(!resultText){
+alert("請先產生報價訊息");
+return;
+}
+
+navigator.clipboard.writeText(resultText);
+
+alert("已複製");
+
+}
+
+function clearAll(){
+
+document.getElementById("width").value="";
+document.getElementById("height").value="";
+document.getElementById("price").value="";
+
+document.getElementById("talent").innerText="才數：0 才";
+document.getElementById("total").innerText="NT$ 0";
+document.getElementById("preview").innerText="";
+
+resultText="";
+
+}
+
+</script>
+
+</body>
+</html>
