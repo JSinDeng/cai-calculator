@@ -6,12 +6,10 @@
 <title>才數報價工具</title>
 
 <style>
-
 body{
     margin:0;
     font-family:sans-serif;
     background:#dcdcdc;
-
     display:flex;
     justify-content:center;
     align-items:center;
@@ -27,37 +25,25 @@ body{
     box-sizing:border-box;
 }
 
-h1{
-    text-align:center;
-    margin-bottom:25px;
-}
+h1{text-align:center;}
 
-label{
-    display:block;
-    margin-top:15px;
-    margin-bottom:5px;
-    font-size:15px;
-}
+label{margin-top:15px; display:block;}
 
 input{
     width:100%;
     padding:10px;
     font-size:16px;
-    border:1px solid #ccc;
-    border-radius:6px;
-    box-sizing:border-box;
+    margin-top:5px;
 }
 
 .result{
     text-align:center;
-    margin-top:25px;
-    font-size:20px;
+    margin-top:20px;
 }
 
 .price{
     color:#e65100;
-    font-size:28px;
-    margin-top:5px;
+    font-size:26px;
 }
 
 button{
@@ -67,23 +53,11 @@ button{
     border:none;
     border-radius:8px;
     font-size:16px;
-    cursor:pointer;
 }
 
-.btn-generate{
-    background:#3b82b6;
-    color:white;
-}
-
-.btn-copy{
-    background:#2ea65c;
-    color:white;
-}
-
-.btn-clear{
-    background:#999;
-    color:white;
-}
+.btn-generate{background:#3b82b6;color:white;}
+.btn-copy{background:#2ea65c;color:white;}
+.btn-clear{background:#999;color:white;}
 
 .preview{
     margin-top:20px;
@@ -91,9 +65,7 @@ button{
     padding:15px;
     border-radius:10px;
     white-space:pre-line;
-    font-size:15px;
 }
-
 </style>
 </head>
 
@@ -127,55 +99,51 @@ button{
 
 <script>
 
-let resultText="";
+let resultText = "";
 
-function generateText(){
+/* ✅ 核心計算 */
+function calculate(){
 
-let w = document.getElementById("width").value;
-let h = document.getElementById("height").value;
-let p = document.getElementById("price").value;
+let w = parseFloat(document.getElementById("width").value);
+let h = parseFloat(document.getElementById("height").value);
+let p = parseFloat(document.getElementById("price").value);
 
-let talent = (w*h)/900;
-talent = Math.round(talent);
-
-let total = (p ? talent * p : 0);
-
-resultText =
-"尺寸："+w+" × "+h+" cm\n"+
-"才數："+talent+" 才\n"+
-"金額："+total+" 元\n";
-
-document.getElementById("preview").innerText=resultText;
-
+if(!w || !h){
+document.getElementById("talent").innerText="才數：0 才";
+document.getElementById("total").innerText="NT$ 0";
+return;
 }
 
-if(p){
-let total = talent * p;
+let talent = Math.round((w*h)/900);
+
+document.getElementById("talent").innerText="才數："+talent+" 才";
+
+let total = (p ? talent*p : 0);
+
 document.getElementById("total").innerText="NT$ "+total;
-}
 
 }
 
+/* ✅ 產生文字 */
 function generateText(){
 
 let w = document.getElementById("width").value;
 let h = document.getElementById("height").value;
 let p = document.getElementById("price").value;
 
-let talent = (w*h)/900;
-talent = Math.round(talent);
-
-let total = talent*p;
+let talent = Math.round((w*h)/900);
+let total = (p ? talent*p : 0);
 
 resultText =
 "尺寸："+w+" × "+h+" cm\n"+
 "才數："+talent+" 才\n"+
-"金額："+total+" 元\n";
+"金額："+total+" 元";
 
 document.getElementById("preview").innerText=resultText;
 
 }
 
+/* ✅ 複製 */
 function copyText(){
 
 if(!resultText){
@@ -184,11 +152,11 @@ return;
 }
 
 navigator.clipboard.writeText(resultText);
-
 alert("已複製");
 
 }
 
+/* ✅ 清空 */
 function clearAll(){
 
 document.getElementById("width").value="";
