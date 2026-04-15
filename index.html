@@ -129,23 +129,25 @@ button{
 
 let resultText="";
 
-function calculate(){
+function generateText(){
 
-let w = parseFloat(document.getElementById("width").value);
-let h = parseFloat(document.getElementById("height").value);
-let p = parseFloat(document.getElementById("price").value);
-
-if(!w || !h){
-document.getElementById("talent").innerText="才數：0 才";
-document.getElementById("total").innerText="NT$ 0";
-return;
-}
+let w = document.getElementById("width").value;
+let h = document.getElementById("height").value;
+let p = document.getElementById("price").value;
 
 let talent = (w*h)/900;
-
 talent = Math.round(talent);
 
-document.getElementById("talent").innerText="才數："+talent+" 才";
+let total = (p ? talent * p : 0);
+
+resultText =
+"尺寸："+w+" × "+h+" cm\n"+
+"才數："+talent+" 才\n"+
+"金額："+total+" 元\n";
+
+document.getElementById("preview").innerText=resultText;
+
+}
 
 if(p){
 let total = talent * p;
