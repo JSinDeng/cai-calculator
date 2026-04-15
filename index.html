@@ -6,6 +6,7 @@
 <title>才數報價工具</title>
 
 <style>
+
 body{
     margin:0;
     padding:20px;
@@ -26,9 +27,23 @@ body{
     border-radius:15px;
     box-shadow:0 5px 15px rgba(0,0,0,0.2);
     box-sizing:border-box;
-    margin:auto;
 }
 
+/* ⭐ 修正標題置中 */
+h1{
+    text-align:center;
+    margin:0 0 25px;
+    letter-spacing:2px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-size:15px;
+}
+
+/* ⭐ 修正 input（你原本這裡壞掉） */
 input{
     width:100%;
     padding:12px;
@@ -37,20 +52,17 @@ input{
     border-radius:6px;
     box-sizing:border-box;
 }
-    width:100%;
-    padding:10px;
-    font-size:16px;
-    margin-top:5px;
-}
 
 .result{
     text-align:center;
-    margin-top:20px;
+    margin-top:25px;
+    font-size:20px;
 }
 
 .price{
     color:#e65100;
-    font-size:26px;
+    font-size:28px;
+    margin-top:5px;
 }
 
 button{
@@ -60,6 +72,7 @@ button{
     border:none;
     border-radius:8px;
     font-size:16px;
+    cursor:pointer;
 }
 
 .btn-generate{background:#3b82b6;color:white;}
@@ -72,7 +85,9 @@ button{
     padding:15px;
     border-radius:10px;
     white-space:pre-line;
+    font-size:15px;
 }
+
 </style>
 </head>
 
@@ -108,7 +123,7 @@ button{
 
 let resultText = "";
 
-/* ✅ 核心計算 */
+/* 計算 */
 function calculate(){
 
 let w = parseFloat(document.getElementById("width").value);
@@ -131,7 +146,7 @@ document.getElementById("total").innerText="NT$ "+total;
 
 }
 
-/* ✅ 產生文字 */
+/* 產生文字 */
 function generateText(){
 
 let w = document.getElementById("width").value;
@@ -150,7 +165,7 @@ document.getElementById("preview").innerText=resultText;
 
 }
 
-/* ✅ 複製 */
+/* 複製 */
 function copyText(){
 
 if(!resultText){
@@ -163,7 +178,7 @@ alert("已複製");
 
 }
 
-/* ✅ 清空 */
+/* 清空 */
 function clearAll(){
 
 document.getElementById("width").value="";
